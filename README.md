@@ -25,6 +25,10 @@ Your stream should appear as "android_test" in ProjectRTC, so you can also use t
 ### [libjingle peerconnection](https://code.google.com/p/webrtc/)
 ### [socket.io-client](https://github.com/nkzawa/socket.io-client.java)
 
+## Access screen share
+
+Fetch https://xx.xx.xx.xx:3000/streams.json and find out the id of peer device.
+
 ## Author
 
 - [Pierre Chabardes](mailto:pierre@chabardes.net)

@@ -78,7 +78,7 @@ public class RtcActivity extends Activity implements WebRtcClient.RtcListener {
             final List<String> segments = intent.getData().getPathSegments();
             callerId = segments.get(0);
         }
-        checkPermissions();
+//        checkPermissions();
     }
 
     private void checkPermissions() {
