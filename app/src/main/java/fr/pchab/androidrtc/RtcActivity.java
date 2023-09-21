@@ -139,7 +139,7 @@ public class RtcActivity extends Activity implements WebRtcClient.RtcListener {
                 e.printStackTrace();
             }
         } else {
-            call(callId);
+//            call(callId);
         }
     }
 

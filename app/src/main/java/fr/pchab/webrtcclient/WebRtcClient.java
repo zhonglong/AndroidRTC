@@ -13,6 +13,8 @@ import org.webrtc.DefaultVideoDecoderFactory;
 import org.webrtc.DefaultVideoEncoderFactory;
 import org.webrtc.EglBase;
 import org.webrtc.IceCandidate;
+import org.webrtc.Loggable;
+import org.webrtc.Logging;
 import org.webrtc.MediaConstraints;
 import org.webrtc.MediaStream;
 import org.webrtc.PeerConnection;
@@ -330,6 +332,12 @@ public class WebRtcClient {
         PeerConnectionFactory.initialize(
                 PeerConnectionFactory.InitializationOptions.builder(mEGLcontext)
                         .setEnableInternalTracer(true)
+                        .setInjectableLogger(new Loggable() {
+                            @Override
+                            public void onLogMessage(String message, Logging.Severity severity, String tag) {
+                                Log.d(TAG, tag + " -> " + message);
+                            }
+                        }, Logging.Severity.LS_INFO)
                         .createInitializationOptions());
 //        factory = new PeerConnectionFactory();
         final VideoEncoderFactory encoderFactory;
