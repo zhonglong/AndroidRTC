@@ -17,9 +17,11 @@ import org.webrtc.Loggable;
 import org.webrtc.Logging;
 import org.webrtc.MediaConstraints;
 import org.webrtc.MediaStream;
+import org.webrtc.MediaStreamTrack;
 import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnectionFactory;
 import org.webrtc.RtpReceiver;
+import org.webrtc.RtpTransceiver;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
 import org.webrtc.SoftwareVideoDecoderFactory;
@@ -298,11 +300,17 @@ public class WebRtcClient {
 
         public Peer(String id, int endPoint) {
             Log.d(TAG, "new Peer: " + id + " " + endPoint);
-            this.pc = factory.createPeerConnection(iceServers, pcConstraints, this);
+            PeerConnection.RTCConfiguration rtcConfig = new PeerConnection.RTCConfiguration(iceServers);
+            rtcConfig.sdpSemantics = PeerConnection.SdpSemantics.UNIFIED_PLAN;
+            this.pc = factory.createPeerConnection(rtcConfig, pcConstraints, this);
             this.id = id;
             this.endPoint = endPoint;
 
 //            pc.addStream(localMS); //, new MediaConstraints()
+            pc.addTransceiver(MediaStreamTrack.MediaType.MEDIA_TYPE_VIDEO,
+                    new RtpTransceiver.RtpTransceiverInit(RtpTransceiver.RtpTransceiverDirection.RECV_ONLY));
+            pc.addTransceiver(MediaStreamTrack.MediaType.MEDIA_TYPE_AUDIO,
+                    new RtpTransceiver.RtpTransceiverInit(RtpTransceiver.RtpTransceiverDirection.RECV_ONLY));
 
             mListener.onStatusChanged("CONNECTING");
         }
